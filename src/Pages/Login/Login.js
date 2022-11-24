@@ -1,20 +1,39 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { authContext } from "../../contexts/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const { signIn } = useContext(authContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     const form = e.target;
-
     const email = form.email.value;
     const password = form.password.value;
+
     setError("");
 
-    console.log(email, password);
+    console.log(email);
+
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+        toast.success("User login successfully ");
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.message);
+      });
   };
+
   return (
     <div>
       <div className="w-full mx-auto max-w-md p-4 rounded-md shadow sm:p-8 bg-gray-900 text-gray-100">
@@ -49,7 +68,7 @@ const Login = () => {
           <hr className="w-full text-gray-400" />
         </div>
         <form
-          onClick={handleLogin}
+          onSubmit={handleLogin}
           className="space-y-8 ng-untouched ng-pristine ng-valid"
         >
           <div className="space-y-4">
@@ -88,10 +107,10 @@ const Login = () => {
                 className="w-full px-3 py-2 border rounded-md border-gray-700 bg-gray-900 text-gray-100 focus:border-violet-400"
               />
             </div>
-            <p className="text-600">{error}</p>
+            <p className="text-red-600">{error}</p>
           </div>
           <button
-            type="button"
+            type="submit"
             className="w-full px-8 py-3 font-semibold rounded-md bg-violet-400 text-gray-900"
           >
             Sign in
