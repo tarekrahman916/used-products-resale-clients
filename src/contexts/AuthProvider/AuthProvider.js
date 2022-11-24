@@ -33,6 +33,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     setLoading(true);
+    localStorage.removeItem("laptopStoreToken");
     signOut(auth);
   };
 

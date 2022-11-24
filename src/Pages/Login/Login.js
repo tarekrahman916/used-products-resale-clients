@@ -8,7 +8,7 @@ const Login = () => {
   const { signIn, user } = useContext(authContext);
   const [error, setError] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [token] = useToken(user?.email);
+  const [token] = useToken(userEmail);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";

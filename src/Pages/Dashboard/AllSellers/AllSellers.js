@@ -39,8 +39,14 @@ const AllSellers = () => {
                   <td>{seller.name}</td>
                   <td>{seller.email}</td>
                   <td>{seller.role}</td>
-                  <td>Make Admin</td>
-                  <td>Delete</td>
+                  <td>
+                    <button className="btn btn-primary btn-sm">
+                      Make Admin
+                    </button>
+                  </td>
+                  <td>
+                    <button className="btn btn-error btn-sm">Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
