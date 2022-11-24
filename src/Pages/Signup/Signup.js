@@ -31,7 +31,7 @@ const Signup = () => {
         };
         updateUser(userInfo)
           .then(() => {
-            navigate("/");
+            saveUserDb(name, email, role);
             toast.success("User created successfully");
           })
           .catch((err) => {
@@ -46,7 +46,21 @@ const Signup = () => {
       });
   };
 
-  // const saveUser=
+  const saveUserDb = (name, email, role) => {
+    const user = { name, email, role };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        navigate("/");
+      });
+  };
 
   return (
     <div>
