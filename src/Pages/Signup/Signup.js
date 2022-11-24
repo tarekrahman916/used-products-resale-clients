@@ -2,11 +2,18 @@ import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { authContext } from "../../contexts/AuthProvider/AuthProvider";
+import useToken from "../../hooks/useToken";
 
 const Signup = () => {
   const { createUser, updateUser } = useContext(authContext);
   const [error, setError] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [token] = useToken(userEmail);
   const navigate = useNavigate();
+
+  if (token) {
+    navigate("/");
+  }
   const handleSignUp = (e) => {
     e.preventDefault();
 
@@ -32,6 +39,7 @@ const Signup = () => {
         updateUser(userInfo)
           .then(() => {
             saveUserDb(name, email, role);
+            setUserEmail(user?.email);
             toast.success("User created successfully");
           })
           .catch((err) => {
@@ -58,7 +66,6 @@ const Signup = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        navigate("/");
       });
   };
 
