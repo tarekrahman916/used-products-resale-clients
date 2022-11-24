@@ -1,21 +1,54 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { authContext } from "../../contexts/AuthProvider/AuthProvider";
 
 const Signup = () => {
+  const { createUser, updateUser } = useContext(authContext);
+  const [error, setError] = useState("");
+  const handleSignUp = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const role = form.role.value;
+    const password = form.password.value;
+    setError("");
+
+    if (password.length < 6) {
+      setError("Password should be at 6 character");
+      return;
+    }
+
+    console.log(name, email, role, password);
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        const userInfo = {
+          displayName: name,
+        };
+        updateUser(userInfo)
+          .then(() => {})
+          .catch((err) => {
+            console.log(err);
+            setError(err.message);
+          });
+        console.log(user);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.message);
+      });
+  };
+
   return (
     <div>
       <div className="w-full mx-auto max-w-md p-4 rounded-md shadow sm:p-8 bg-gray-900 text-gray-100">
-        <h2 className="mb-3 text-3xl font-semibold text-center">
-          Login to your account
-        </h2>
-        <p className="text-sm text-center text-gray-400">
-          Dont have account?
-          <Link
-            href="#"
-            rel="noopener noreferrer"
-            className="focus:underline hover:underline"
-          >
-            Sign up here
+        <h2 className="mb-3 text-3xl font-semibold text-center">Sign Up</h2>
+        <p className="text-sm text-center text-gray-300">
+          Already have an account?
+          <Link to="/login" className="focus:underline hover:underline">
+            Login
           </Link>
         </p>
         <div className="my-6 space-y-4">
@@ -40,64 +73,71 @@ const Signup = () => {
           <hr className="w-full text-gray-400" />
         </div>
         <form
-          novalidate=""
-          action=""
+          onSubmit={handleSignUp}
           className="space-y-8 ng-untouched ng-pristine ng-valid"
         >
           <div className="space-y-4">
             <div className="space-y-2">
-              <label for="email" className="block text-sm">
+              <label htmlFor="email" className="block text-sm">
+                Your Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                required
+                placeholder="Your Name"
+                className="w-full px-3 py-2 border rounded-md border-gray-700 bg-gray-900 text-gray-100 focus:border-violet-400"
+                data-temp-mail-org="2"
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="email" className="block text-sm">
                 Email address
               </label>
               <input
                 type="email"
                 name="email"
                 id="email"
+                required
                 placeholder="leroy@jenkins.com"
                 className="w-full px-3 py-2 border rounded-md border-gray-700 bg-gray-900 text-gray-100 focus:border-violet-400"
                 data-temp-mail-org="2"
               />
             </div>
             <div className="space-y-2">
-              <label for="email" className="block text-sm">
+              <label htmlFor="email" className="block text-sm">
                 Your Role
               </label>
               <select
-                type="email"
-                name="email"
-                id="email"
-                placeholder="leroy@jenkins.com"
+                name="role"
+                required
                 className="w-full px-3 py-2 border rounded-md border-gray-700 bg-gray-900 text-gray-100 focus:border-violet-400"
                 data-temp-mail-org="2"
               >
-                <option>Buyer</option>
-                <option>Seller</option>
+                <option value="buyer">Buyer</option>
+                <option value="seller">Seller</option>
               </select>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <label for="password" className="text-sm">
+                <label htmlFor="password" className="text-sm">
                   Password
                 </label>
-                <btn
-                  rel="noopener noreferrer"
-                  href="#"
-                  className="text-xs hover:underline text-gray-400"
-                >
-                  Forgot password?
-                </btn>
               </div>
               <input
                 type="password"
                 name="password"
                 id="password"
+                required
                 placeholder="*****"
                 className="w-full px-3 py-2 border rounded-md border-gray-700 bg-gray-900 text-gray-100 focus:border-violet-400"
               />
             </div>
+            <p className="text-red-600">{error}</p>
           </div>
           <button
-            type="button"
+            type="submit"
             className="w-full px-8 py-3 font-semibold rounded-md bg-violet-400 text-gray-900"
           >
             Sign in

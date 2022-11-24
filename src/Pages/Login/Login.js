@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  const [error, setError] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const email = form.email.value;
+    const password = form.password.value;
+    setError("");
+
+    console.log(email, password);
+  };
   return (
     <div>
       <div className="w-full mx-auto max-w-md p-4 rounded-md shadow sm:p-8 bg-gray-900 text-gray-100">
         <h2 className="mb-3 text-3xl font-semibold text-center">
           Login to your account
         </h2>
-        <p className="text-sm text-center text-gray-400">
-          Dont have account?
+        <p className="text-sm text-center text-gray-200">
+          Don't have account?
           <Link to="/signup" className="focus:underline hover:underline">
             Sign up here
           </Link>
@@ -36,13 +49,12 @@ const Login = () => {
           <hr className="w-full text-gray-400" />
         </div>
         <form
-          novalidate=""
-          action=""
+          onClick={handleLogin}
           className="space-y-8 ng-untouched ng-pristine ng-valid"
         >
           <div className="space-y-4">
             <div className="space-y-2">
-              <label for="email" className="block text-sm">
+              <label htmlFor="email" className="block text-sm">
                 Email address
               </label>
               <input
@@ -57,7 +69,7 @@ const Login = () => {
 
             <div className="space-y-2">
               <div className="flex justify-between">
-                <label for="password" className="text-sm">
+                <label htmlFor="password" className="text-sm">
                   Password
                 </label>
                 <btn
@@ -76,6 +88,7 @@ const Login = () => {
                 className="w-full px-3 py-2 border rounded-md border-gray-700 bg-gray-900 text-gray-100 focus:border-violet-400"
               />
             </div>
+            <p className="text-600">{error}</p>
           </div>
           <button
             type="button"
