@@ -2,17 +2,15 @@ import { format } from "date-fns";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { authContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 const AddProduct = () => {
   const { user } = useContext(authContext);
   const date = new Date();
   const postDate = format(date, "PP");
-  console.log(postDate);
+  const navigate = useNavigate();
   const hostKey = process.env.REACT_APP_img_key;
-
-  console.log(hostKey);
 
   const {
     register,
@@ -68,8 +66,10 @@ const AddProduct = () => {
           })
             .then((res) => res.json())
             .then((result) => {
-              console.log(result);
-              toast.success("success");
+              if (result.acknowledged) {
+                navigate("/dashboard/seller/myproducts");
+                toast.success("Product added successfully");
+              }
             });
         }
       });

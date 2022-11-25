@@ -30,10 +30,10 @@ const MyProducts = () => {
   };
 
   return (
-    <div>
-      my Products
+    <div className="my-6">
+      <h2 className="text-3xl font-semibold mb-4 text-center">My Products</h2>
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table ">
           <thead>
             <tr>
               <th></th>
@@ -41,6 +41,7 @@ const MyProducts = () => {
               <th>Name</th>
               <th>Price</th>
               <th>Status</th>
+              <th></th>
               <th>Action</th>
             </tr>
           </thead>
@@ -60,14 +61,16 @@ const MyProducts = () => {
                 </td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
-                <td>{product?.status ? "Sold" : "Available"}</td>
-
+                <td>{product?.sold ? "Sold" : "Available"}</td>
                 <td>
-                  {!product?.status && (
-                    <button className="btn btn-sm btn-primary m">
+                  {!product?.sold && (
+                    <button className="btn btn-sm btn-primary mr-3">
                       Advertise
                     </button>
                   )}
+                </td>
+
+                <td>
                   <button
                     onClick={() => handleDelete(product._id)}
                     className="btn btn-sm btn-error"
