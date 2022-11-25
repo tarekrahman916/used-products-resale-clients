@@ -63,7 +63,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost normal-case text-xl text-primary">
-          Laptop Bazar
+          Laptop Store
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">

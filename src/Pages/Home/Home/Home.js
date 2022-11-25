@@ -1,5 +1,6 @@
 import React from "react";
 import Categories from "../Categories/Categories";
+import Info from "../Info/Info";
 import TopBanner from "../TopBanner.js/TopBanner";
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
     <div>
       <TopBanner />
       <Categories />
+      <Info />
     </div>
   );
 };

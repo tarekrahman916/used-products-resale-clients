@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import Loader from "../../../components/Loader/Loader";
+import { BeakerIcon, ArrowLongRightIcon } from "@heroicons/react/24/solid";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -30,14 +31,14 @@ const Categories = () => {
         <h2 className="text-4xl text-center font-bold">All Categories</h2>
         <hr className="border-2 border-primary w-1/2 mx-auto mt-3" />
       </div>
-      <div className="flex gap-8 justify-center">
+      <div className="grid lg:grid-cols-3 gap-8 justify-center md:mx-32">
         {categories.map((category) => (
           <Link key={category._id} to={`/categories/${category._id}`}>
-            <div className="bg-indigo-400 shadow-md px-10 py-5 rounded-lg flex gap-2 items-center">
+            <div className="bg-primary shadow-md px-10 py-5 rounded-lg flex gap-2 justify-center items-center">
               <h2 className="text-3xl text-white text-center">
                 {category.name}
               </h2>
-              <FaArrowRight className="h-4 w-4" />
+              <ArrowLongRightIcon className="h-12 w-6 text-white hover:w-8" />
             </div>
           </Link>
         ))}
