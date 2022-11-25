@@ -1,7 +1,8 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
+import BookingModal from "../BookingModal/BookingModal";
 
-const Product = ({ product }) => {
+const Product = ({ product, setSelectedProduct }) => {
   const {
     name,
     image,
@@ -35,9 +36,14 @@ const Product = ({ product }) => {
           <p>Location: {location}</p>
         </div>
         <div className="card-actions ">
-          <button type="submit" className="btn btn-secondary w-full">
+          <label
+            htmlFor="booking-modal"
+            onClick={() => setSelectedProduct(product)}
+            type="submit"
+            className="btn btn-secondary w-full"
+          >
             Book Now
-          </button>
+          </label>
         </div>
       </div>
     </div>

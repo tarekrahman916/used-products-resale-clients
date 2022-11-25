@@ -13,6 +13,7 @@ const Dashboard = () => {
   }, [user?.email]);
 
   const { name, email, role } = loginUser;
+  console.log(role);
 
   return (
     <div>
