@@ -77,6 +77,7 @@ const router = createBrowserRouter([
             <AddProduct />
           </SellerRoute>
         ),
+        loader: () => fetch("http://localhost:5000/categories"),
       },
       {
         path: "/dashboard/seller/myproducts",
