@@ -43,10 +43,12 @@ const AddProduct = () => {
             name: data.name,
             image: imgData.data.url,
             categoryId: data.categoryId,
-            salePrice: data.salePrice,
+            price: data.salePrice,
             originalPrice: data.originalPrice,
+            condition: data.condition,
             useYears: data.useYears,
             seller: user?.displayName,
+            email: user?.email,
             phone: data.phone,
             location: data.location,
             postDate: postDate,
@@ -144,6 +146,19 @@ const AddProduct = () => {
                 placeholder="Original Price here"
                 className="input input-bordered w-full "
               />
+            </div>
+            <div className="form-control w-full ">
+              <label className="label">
+                <span className="label-text text-white">Condition</span>
+              </label>
+              <select
+                {...register("condition", { required: true })}
+                className="select select-bordered w-full "
+              >
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Fair</option>
+              </select>
             </div>
             <div className="form-control w-full ">
               <label className="label">
