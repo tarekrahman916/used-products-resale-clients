@@ -38,6 +38,8 @@ const router = createBrowserRouter([
             <Products />
           </PrivateRoute>
         ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/products/categories/${params.id}`),
       },
     ],
   },

@@ -1,10 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { authContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 const Dashboard = () => {
   const { user } = useContext(authContext);
-  console.log(user);
+  const [loginUser, setLoginUser] = useState("");
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/users/${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => setLoginUser(data));
+  }, [user?.email]);
+
+  const { name, email, role } = loginUser;
 
   return (
     <div>
@@ -16,9 +24,9 @@ const Dashboard = () => {
             <FaUserAlt className="w-12 h-12" />
           )}
         </div>
-        <h2 className="text-4xl text-primary">{user?.displayName}</h2>
-        <h4 className="text-2xl">Email: {user?.email}</h4>
-        <p className="text-xl">Role: Admin</p>
+        <h2 className="text-4xl text-primary">{name}</h2>
+        <h4 className="text-2xl">Email: {email}</h4>
+        <p className="text-xl">Role: {role}</p>
       </div>
     </div>
   );
