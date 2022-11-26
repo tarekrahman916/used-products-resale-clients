@@ -1,8 +1,20 @@
-import React from "react";
-import { FaCheck } from "react-icons/fa";
-import BookingModal from "../BookingModal/BookingModal";
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext } from "react";
+import { authContext } from "../../../contexts/AuthProvider/AuthProvider";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 
 const Product = ({ product, setSelectedProduct }) => {
+  const { user } = useContext(authContext);
+
+  const { data: productSeller = {} } = useQuery({
+    queryKey: ["productSeller", user?.email],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/users/${user?.email}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+
   const {
     name,
     image,
@@ -43,7 +55,12 @@ const Product = ({ product, setSelectedProduct }) => {
           <p>Years Of use: {useYears}y</p>
         </div>
 
-        <p className="text-base font-bold">Seller: {seller}</p>
+        <p className="text-base font-bold flex">
+          Seller: {seller}
+          {productSeller.status === "verified" && (
+            <CheckBadgeIcon className="h-6 w-6 text-blue-500" />
+          )}
+        </p>
         <div className="flex ">
           <p>Phone: {phone}</p>
           <p>Location: {location}</p>

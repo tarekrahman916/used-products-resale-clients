@@ -8,8 +8,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 const Payment = () => {
   const booking = useLoaderData();
-  console.log(process.env.REACT_APP_STRIPE_PK);
-  console.log(stripePromise);
+
   return (
     <div>
       <div className="w-96 mx-auto">

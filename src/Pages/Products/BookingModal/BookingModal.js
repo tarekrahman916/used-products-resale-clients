@@ -9,7 +9,6 @@ const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
   const handleBooking = (e) => {
     e.preventDefault();
     const form = e.target;
-    console.log(form);
 
     const productName = form.productName.value;
     const price = form.price.value;
@@ -39,7 +38,7 @@ const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          toast.success("Your booking successFully added");
+          toast.success("The Product is booked.");
           setSelectedProduct("");
         }
       });

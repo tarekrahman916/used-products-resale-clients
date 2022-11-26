@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import toast from "react-hot-toast";
@@ -30,6 +29,22 @@ const AllSellers = () => {
       });
   };
 
+  const handleVerify = (email) => {
+    fetch(`http://localhost:5000/users?email=${email}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("This seller is verified successfully");
+          refetch();
+        }
+      });
+  };
+
   return (
     <div>
       <h2 className="text-3xl text-center font-bold my-6">All Sellers</h2>
@@ -42,6 +57,7 @@ const AllSellers = () => {
                 <th>Name</th>
                 <th>email</th>
                 <th>Role</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -52,6 +68,14 @@ const AllSellers = () => {
                   <td>{seller.name}</td>
                   <td>{seller.email}</td>
                   <td>{seller.role}</td>
+                  <td>
+                    <button
+                      onClick={() => handleVerify(seller.email)}
+                      className="btn btn-primary btn-sm"
+                    >
+                      {seller.status === "verified" ? "Verified" : "Verify"}
+                    </button>
+                  </td>
                   <td>
                     <button
                       onClick={() => handleDelete(seller._id)}

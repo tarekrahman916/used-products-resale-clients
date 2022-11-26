@@ -1,15 +1,48 @@
+import { async } from "@firebase/util";
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 const Navbar = () => {
   const { user, logOut } = useContext(authContext);
+
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/categories");
+      const data = await res.json();
+      return data;
+    },
+  });
+
   const menuData = (
     <>
       <li>
         <Link to="/" className="font-bold ">
           Home
         </Link>
+      </li>
+      <li tabIndex={0}>
+        <Link className="font-bold ">
+          Categories
+          <svg
+            className="fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+          >
+            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+          </svg>
+        </Link>
+        <ul className="p-2 bg-base-100 w-36">
+          {categories.map((category) => (
+            <li key={category._id}>
+              <Link to={`/categories/${category._id}`}>{category.name}</Link>
+            </li>
+          ))}
+        </ul>
       </li>
       <li>
         <Link to="/blogs" className="font-bold">

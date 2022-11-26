@@ -7,16 +7,11 @@ const Advertise = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/products?advertise=true", {
-      headers: {
-        authorization: `bearer ${localStorage.getItem("laptopStoreToken")}`,
-      },
-    })
+    fetch("http://localhost:5000/products?advertise=true")
       .then((res) => res.json())
       .then((data) => setAdvertiseProducts(data));
   }, []);
 
-  console.log(advertiseProducts);
   return (
     <div>
       {advertiseProducts.length > 0 && (
@@ -30,6 +25,7 @@ const Advertise = () => {
           <div className="grid lg:grid-cols-3 gap-8">
             {advertiseProducts.map((product) => (
               <Product
+                key={product._id}
                 product={product}
                 setSelectedProduct={setSelectedProduct}
               />
