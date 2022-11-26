@@ -7,7 +7,11 @@ const Advertise = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/products?advertise=true")
+    fetch("http://localhost:5000/products?advertise=true", {
+      headers: {
+        authorization: `bearer ${localStorage.getItem("laptopStoreToken")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setAdvertiseProducts(data));
   }, []);
@@ -17,7 +21,12 @@ const Advertise = () => {
     <div>
       {advertiseProducts.length > 0 && (
         <div>
-          <h2 className="text-4xl text-center my-6">Advertise Products</h2>
+          <div className="mb-16">
+            <h2 className="text-4xl font-bold text-center my-6">
+              Advertise Products
+            </h2>
+            <hr className="border-2 border-primary lg:w-1/3 mx-auto mt-3" />
+          </div>
           <div className="grid lg:grid-cols-3 gap-8">
             {advertiseProducts.map((product) => (
               <Product

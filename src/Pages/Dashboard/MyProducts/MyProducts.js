@@ -1,16 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import Loader from "../../../components/Loader/Loader";
 import { authContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 const MyProducts = () => {
   const { user } = useContext(authContext);
 
-  const { data: myProducts = [], refetch } = useQuery({
+  const {
+    data: myProducts,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["products", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?email=${user?.email}`
+        `http://localhost:5000/products?email=${user?.email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("laptopStoreToken")}`,
+          },
+        }
       );
       const data = await res.json();
       return data;
@@ -43,6 +53,10 @@ const MyProducts = () => {
         }
       });
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="my-6">

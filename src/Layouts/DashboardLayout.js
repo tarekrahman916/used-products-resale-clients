@@ -27,30 +27,30 @@ const DashboardLayout = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+          <ul className="menu p-4 w-60 bg-gray-200 text-base-content  rounded-md mr-2">
             {isAdmin && (
               <>
-                <li>
+                <li className="hover-bordered">
                   <Link to="/dashboard/admin/allsellers">All Seller</Link>
                 </li>
-                <li>
+                <li className="hover-bordered">
                   <Link to="/dashboard/admin/allbuyers">All Buyers</Link>
                 </li>
               </>
             )}
             {isSeller && (
               <>
-                <li>
+                <li className="hover-bordered">
                   <Link to="/dashboard/seller/addproduct">Add Product</Link>
                 </li>
-                <li>
+                <li className="hover-bordered">
                   <Link to="/dashboard/seller/myproducts">My Products</Link>
                 </li>
               </>
             )}
             {isBuyer && (
               <>
-                <li>
+                <li className="hover-bordered">
                   <Link to="/dashboard/myorder">My Orders</Link>
                 </li>
               </>

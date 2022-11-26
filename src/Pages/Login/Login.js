@@ -3,11 +3,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authContext } from "../../contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import useToken from "../../hooks/useToken";
+import BtnSpinner from "../../components/BtnSpinner/BtnSpinner";
 
 const Login = () => {
   const { signIn, user } = useContext(authContext);
   const [error, setError] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [token] = useToken(userEmail);
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,18 +28,18 @@ const Login = () => {
 
     setError("");
 
-    console.log(email);
-
+    setIsLoading(true);
     signIn(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
         setUserEmail(user?.email);
+        setIsLoading(false);
         toast.success("User login successfully ");
       })
       .catch((err) => {
         console.log(err);
         setError(err.message);
+        setIsLoading(false);
       });
   };
 
@@ -120,7 +122,7 @@ const Login = () => {
             type="submit"
             className="w-full px-8 py-3 font-semibold rounded-md bg-violet-400 text-gray-900"
           >
-            Sign in
+            {isLoading ? <BtnSpinner /> : "Sign in"}
           </button>
         </form>
       </div>

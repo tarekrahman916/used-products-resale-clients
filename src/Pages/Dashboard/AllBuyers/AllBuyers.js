@@ -1,8 +1,9 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const AllBuyers = () => {
-  const { data: buyers = [] } = useQuery({
+  const { data: buyers = [], refetch } = useQuery({
     queryKey: ["buyers"],
     queryFn: async () => {
       try {
@@ -19,11 +20,24 @@ const AllBuyers = () => {
     },
   });
 
+  const handleDelete = (id) => {
+    fetch(`http://localhost:5000/users/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          toast.success("User Deleted");
+          refetch();
+        }
+      });
+  };
+
   return (
     <div>
-      <h2 className="text-3xl text-center font-bold">All buyers</h2>
+      <h2 className="text-3xl text-center font-bold my-6">All Buyers</h2>
       <div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto ">
           <table className="table w-full">
             <thead>
               <tr>
@@ -31,7 +45,6 @@ const AllBuyers = () => {
                 <th>Name</th>
                 <th>email</th>
                 <th>Role</th>
-                <th>Admin</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -43,12 +56,12 @@ const AllBuyers = () => {
                   <td>{buyer.email}</td>
                   <td>{buyer.role}</td>
                   <td>
-                    <button className="btn btn-primary btn-sm">
-                      Make Admin
+                    <button
+                      onClick={() => handleDelete(buyer._id)}
+                      className="btn btn-error btn-sm"
+                    >
+                      Delete
                     </button>
-                  </td>
-                  <td>
-                    <button className="btn btn-error btn-sm">Delete</button>
                   </td>
                 </tr>
               ))}

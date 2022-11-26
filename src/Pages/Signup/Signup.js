@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import BtnSpinner from "../../components/BtnSpinner/BtnSpinner";
 import { authContext } from "../../contexts/AuthProvider/AuthProvider";
 import useToken from "../../hooks/useToken";
 
@@ -8,6 +9,7 @@ const Signup = () => {
   const { createUser, updateUser } = useContext(authContext);
   const [error, setError] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [token] = useToken(userEmail);
   const navigate = useNavigate();
 
@@ -30,6 +32,7 @@ const Signup = () => {
     }
 
     console.log(name, email, role, password);
+    setIsLoading(true);
     createUser(email, password)
       .then((result) => {
         const user = result.user;
@@ -40,6 +43,7 @@ const Signup = () => {
           .then(() => {
             saveUserDb(name, email, role);
             setUserEmail(user?.email);
+            setIsLoading(false);
             toast.success("User created successfully");
           })
           .catch((err) => {
@@ -51,6 +55,7 @@ const Signup = () => {
       .catch((err) => {
         console.log(err);
         setError(err.message);
+        setIsLoading(false);
       });
   };
 
@@ -153,7 +158,7 @@ const Signup = () => {
             type="submit"
             className="w-full px-8 py-3 font-semibold rounded-md bg-violet-400 text-gray-900"
           >
-            Sign in
+            {isLoading ? <BtnSpinner /> : "Sign Up"}
           </button>
         </form>
       </div>
