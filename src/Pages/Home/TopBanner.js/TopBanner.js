@@ -24,7 +24,7 @@ const TopBanner = () => {
             <img
               src={laptop}
               alt="laptop"
-              className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128"
+              className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128 rounded-md"
             />
           </div>
         </div>

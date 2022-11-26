@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { authContext } from "../../../contexts/AuthProvider/AuthProvider";
 
 const MyProducts = () => {
@@ -17,7 +18,6 @@ const MyProducts = () => {
   });
 
   const handleDelete = (id) => {
-    console.log(id);
     fetch(`http://localhost:5000/products/${id}`, {
       method: "DELETE",
     })
@@ -27,6 +27,21 @@ const MyProducts = () => {
         refetch();
       })
       .catch((err) => console.error(err));
+  };
+
+  const handleAdvertise = (id) => {
+    fetch(`http://localhost:5000/products?id=${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast.success("Your product added advertising");
+        }
+      });
   };
 
   return (
@@ -64,7 +79,10 @@ const MyProducts = () => {
                 <td>{product?.sold ? "Sold" : "Available"}</td>
                 <td>
                   {!product?.sold && (
-                    <button className="btn btn-sm btn-primary mr-3">
+                    <button
+                      onClick={() => handleAdvertise(product._id)}
+                      className="btn btn-sm btn-primary mr-3"
+                    >
                       Advertise
                     </button>
                   )}
