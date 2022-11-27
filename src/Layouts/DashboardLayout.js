@@ -53,6 +53,9 @@ const DashboardLayout = () => {
                 <li className="hover-bordered">
                   <Link to="/dashboard/myorder">My Orders</Link>
                 </li>
+                <li className="hover-bordered">
+                  <Link to="/dashboard/mywishlist">Wishlist</Link>
+                </li>
               </>
             )}
           </ul>

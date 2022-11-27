@@ -7,7 +7,7 @@ const Advertise = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/products?advertise=true")
+    fetch("http://localhost:5000/products/advertise")
       .then((res) => res.json())
       .then((data) => setAdvertiseProducts(data));
   }, []);

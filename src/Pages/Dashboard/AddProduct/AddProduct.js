@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +11,15 @@ const AddProduct = () => {
   const date = new Date();
   const postDate = format(date, "PP");
   const navigate = useNavigate();
-  const hostKey = process.env.REACT_APP_img_key;
+
+  const { data: productSeller = {} } = useQuery({
+    queryKey: ["productSeller", user?.email],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/users/${user?.email}`);
+      const data = await res.json();
+      return data;
+    },
+  });
 
   const {
     register,
@@ -26,7 +35,7 @@ const AddProduct = () => {
     const formData = new FormData();
     formData.append("image", image);
 
-    const url = `https://api.imgbb.com/1/upload?key=03f6bb752eaa1e452bf3bc045bed77e3`;
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_img_key}`;
 
     fetch(url, {
       method: "POST",
@@ -49,6 +58,7 @@ const AddProduct = () => {
             email: user?.email,
             phone: data.phone,
             location: data.location,
+            sellerStatus: productSeller?.status,
             postDate: postDate,
           };
 

@@ -4,9 +4,12 @@ import { authContext } from "../../contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 import useToken from "../../hooks/useToken";
 import BtnSpinner from "../../components/BtnSpinner/BtnSpinner";
+import { GoogleAuthProvider } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
-  const { signIn, user } = useContext(authContext);
+  const { signIn, googleLogin } = useContext(authContext);
   const [error, setError] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -43,6 +46,38 @@ const Login = () => {
       });
   };
 
+  const handleGoogleLogin = () => {
+    googleLogin(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        const name = user?.displayName;
+        const email = user?.email;
+        const role = "buyer";
+        saveUserDb(name, email, role);
+        setUserEmail(user?.email);
+        toast.success("Login successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
+  };
+
+  const saveUserDb = (name, email, role) => {
+    const user = { name, email, role };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
     <div>
       <div className="w-full mx-auto max-w-md p-4 rounded-md shadow sm:p-8 bg-gray-900 text-gray-100">
@@ -57,6 +92,7 @@ const Login = () => {
         </p>
         <div className="my-6 space-y-4">
           <button
+            onClick={handleGoogleLogin}
             aria-label="Login with Google"
             type="button"
             className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 border-gray-400 focus:ring-violet-400 btn text-white"

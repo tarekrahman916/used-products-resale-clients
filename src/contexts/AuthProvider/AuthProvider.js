@@ -4,6 +4,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -31,6 +32,11 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, userInfo);
   };
 
+  const googleLogin = (provider) => {
+    setLoading(true);
+    return signInWithPopup(auth, provider);
+  };
+
   const logOut = () => {
     setLoading(true);
     localStorage.removeItem("laptopStoreToken");
@@ -48,7 +54,15 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  const authInfo = { user, createUser, updateUser, signIn, logOut, loading };
+  const authInfo = {
+    user,
+    createUser,
+    updateUser,
+    signIn,
+    googleLogin,
+    logOut,
+    loading,
+  };
   return (
     <authContext.Provider value={authInfo}>{children}</authContext.Provider>
   );
