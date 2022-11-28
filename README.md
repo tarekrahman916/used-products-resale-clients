@@ -2,8 +2,9 @@
 
 This is a used laptop resale website.
 
-Admin-email: tarek@mail.com
-Admin-password : T12345
+adminEmail: tarek@mail.com
+
+adminPassword: T12345
 
 ## `Live Link`
 
