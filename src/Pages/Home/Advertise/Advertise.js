@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Loader from "../../../components/Loader/Loader";
 import BookingModal from "../../Products/BookingModal/BookingModal";
 import Product from "../../Products/Product/Product";
 
@@ -24,6 +25,10 @@ const Advertise = () => {
       });
   }, []);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div>
       <div className={`${!advertiseProducts.length && "hidden"} `}>
@@ -43,10 +48,12 @@ const Advertise = () => {
           ))}
         </div>
       </div>
-      <BookingModal
-        selectedProduct={selectedProduct}
-        setSelectedProduct={setSelectedProduct}
-      />
+      {selectedProduct && (
+        <BookingModal
+          selectedProduct={selectedProduct}
+          setSelectedProduct={setSelectedProduct}
+        />
+      )}
     </div>
   );
 };

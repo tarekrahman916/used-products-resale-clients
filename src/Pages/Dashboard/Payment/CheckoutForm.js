@@ -7,6 +7,7 @@ import "./Checkout.css";
 const CheckoutForm = ({ booking }) => {
   const [paymentError, setPaymentError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [transactionId, setTransactionId] = useState("");
   const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
@@ -93,10 +94,11 @@ const CheckoutForm = ({ booking }) => {
           console.log(data);
           if (data.insertedId) {
             toast.success("Congrats ! Your payment completed.");
-            setProcessing(false);
+            setTransactionId(paymentIntent?.id);
           }
         });
     }
+    setProcessing(false);
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -124,6 +126,9 @@ const CheckoutForm = ({ booking }) => {
         Pay
       </button>
       <p className="text-red-600">{paymentError}</p>
+      {transactionId && (
+        <p className="text-white">Your transaction id {transactionId}</p>
+      )}
     </form>
   );
 };

@@ -4,7 +4,7 @@ This is a used laptop resale website.
 
 ## `Live Link`
 
-Hosted in Netlify-> [https://review-website-auth.web.app/](https://review-website-auth.web.app/)
+Hosted in firebase-> [https://laptop-store-ed7de.web.app/](https://laptop-store-ed7de.web.app/)
 
 ### `Uses React Router`
 
