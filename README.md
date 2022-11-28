@@ -2,6 +2,9 @@
 
 This is a used laptop resale website.
 
+Admin-email: tarek@mail.com
+Admin-password : T12345
+
 ## `Live Link`
 
 Hosted in firebase-> [https://laptop-store-ed7de.web.app/](https://laptop-store-ed7de.web.app/)
