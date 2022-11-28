@@ -1,17 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
-import { authContext } from "../../../contexts/AuthProvider/AuthProvider";
-import {
-  CheckBadgeIcon,
-  FlagIcon,
-  ShoppingBagIcon,
-} from "@heroicons/react/24/solid";
+import React from "react";
+import { CheckBadgeIcon, FlagIcon } from "@heroicons/react/24/solid";
 import toast from "react-hot-toast";
 
 const Product = ({ product, setSelectedProduct }) => {
-  const { user } = useContext(authContext);
-
   const {
+    _id,
     name,
     image,
     price,
@@ -21,43 +14,36 @@ const Product = ({ product, setSelectedProduct }) => {
     phone,
     location,
     postDate,
+    description,
     sold,
   } = product;
 
-  const handleAddWishlist = () => {
-    const addedProduct = {
-      productName: name,
-      productImage: image,
-      price,
-      sellerLocation: location,
-      sellerPhone: phone,
-      name: user?.displayName,
-      email: user?.email,
-    };
-
-    fetch("http://localhost:5000/wishlists", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(addedProduct),
-    })
+  const handleAddReport = (id) => {
+    fetch(
+      `https://used-products-resale-server-nine.vercel.app/products/report/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          toast.success(`${addedProduct.productName} is added your wishlist`);
+          toast.success(`You are reported the ${name}`);
         }
       });
   };
 
   return (
-    <div className="card card-compact  bg-gray-200 shadow-xl">
+    <div className="card card-compact  bg-gray-200 shadow-xl z-0">
       <div className="p-2">
         <figure>
           <img
             src={image}
             alt="productImage"
-            className=" rounded-lg h-64 object-cover"
+            className=" rounded-lg h-64 object-cover w-full"
           />
         </figure>
       </div>
@@ -69,7 +55,7 @@ const Product = ({ product, setSelectedProduct }) => {
           {sold ? (
             <p className=" text-xl font-semibold text-red-500">Sold</p>
           ) : (
-            <p>Available</p>
+            <p className="font-bold">Available</p>
           )}
         </div>
         <p className="text-xl">Sale Price: ${price}</p>
@@ -88,14 +74,15 @@ const Product = ({ product, setSelectedProduct }) => {
           <p>Phone: {phone}</p>
           <p>Location: {location}</p>
         </div>
+        <p className="border-2 border-white p-3">{description}</p>
 
         <div className="card-actions ">
           <button
-            onClick={handleAddWishlist}
-            className="btn btn-error btn-sm flex text-white"
+            onClick={() => handleAddReport(_id)}
+            className="btn btn-error btn-sm flex text-white my-3"
           >
-            <ShoppingBagIcon className="w-5 text-yellow-200 mr-2" />
-            Wishlist
+            <FlagIcon className="w-5 text-yellow-200 mr-2" />
+            Report to admin
           </button>
 
           {!sold && (

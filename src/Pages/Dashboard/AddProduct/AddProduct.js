@@ -15,7 +15,9 @@ const AddProduct = () => {
   const { data: productSeller = {} } = useQuery({
     queryKey: ["productSeller", user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/users/${user?.email}`);
+      const res = await fetch(
+        `https://used-products-resale-server-nine.vercel.app/users/${user?.email}`
+      );
       const data = await res.json();
       return data;
     },
@@ -58,22 +60,26 @@ const AddProduct = () => {
             email: user?.email,
             phone: data.phone,
             location: data.location,
-            sellerStatus: productSeller?.status,
+            sellerStatus: "unverified",
             postDate: postDate,
+            description: data.description,
           };
 
           console.log(product);
 
-          fetch("http://localhost:5000/products", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-              authorization: `bearer ${localStorage.getItem(
-                "laptopStoreToken"
-              )}`,
-            },
-            body: JSON.stringify(product),
-          })
+          fetch(
+            "https://used-products-resale-server-nine.vercel.app/products",
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                authorization: `bearer ${localStorage.getItem(
+                  "laptopStoreToken"
+                )}`,
+              },
+              body: JSON.stringify(product),
+            }
+          )
             .then((res) => res.json())
             .then((result) => {
               if (result.acknowledged) {
@@ -101,6 +107,7 @@ const AddProduct = () => {
               <input
                 {...register("name", { required: true })}
                 type="text"
+                required
                 placeholder="Product Name"
                 className="input input-bordered w-full text-dark"
               />
@@ -112,6 +119,7 @@ const AddProduct = () => {
               <input
                 {...register("image", { required: true })}
                 type="file"
+                required
                 placeholder="Type here"
                 className="input input-bordered w-full "
               />
@@ -124,6 +132,7 @@ const AddProduct = () => {
               </label>
               <select
                 {...register("categoryId", { required: true })}
+                required
                 className="select select-bordered w-full "
               >
                 {categories.map((category) => (
@@ -139,6 +148,7 @@ const AddProduct = () => {
               </label>
               <input
                 {...register("salePrice", { required: true })}
+                required
                 type="text"
                 placeholder="Sale Price"
                 className="input input-bordered w-full "
@@ -152,6 +162,7 @@ const AddProduct = () => {
               </label>
               <input
                 {...register("originalPrice", { required: true })}
+                required
                 type="text"
                 placeholder="Original Price here"
                 className="input input-bordered w-full "
@@ -163,6 +174,7 @@ const AddProduct = () => {
               </label>
               <select
                 {...register("condition", { required: true })}
+                required
                 className="select select-bordered w-full "
               >
                 <option>Excellent</option>
@@ -176,6 +188,7 @@ const AddProduct = () => {
               </label>
               <input
                 {...register("useYears", { required: true })}
+                required
                 type="text"
                 placeholder="Years of use"
                 className="input input-bordered w-full "
@@ -189,6 +202,7 @@ const AddProduct = () => {
               </label>
               <input
                 {...register("phone", { required: true })}
+                required
                 type="text"
                 placeholder="Phone"
                 className="input input-bordered w-full "
@@ -200,6 +214,7 @@ const AddProduct = () => {
               </label>
               <input
                 {...register("location", { required: true })}
+                required
                 type="text"
                 placeholder="Location"
                 className="input input-bordered w-full "
@@ -212,6 +227,7 @@ const AddProduct = () => {
             </label>
             <textarea
               {...register("description", { required: true })}
+              required
               className="textarea textarea-bordered w-full mb-5"
               placeholder="Description"
             ></textarea>

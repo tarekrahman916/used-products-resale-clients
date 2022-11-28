@@ -8,8 +8,8 @@ import AllSellers from "../../Pages/Dashboard/AllSellers/AllSellers";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import MyOrder from "../../Pages/Dashboard/MyOrder/MyOrder";
 import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
-import MyWishlist from "../../Pages/Dashboard/MyWishlist/MyWishlist";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
+import ReportedProducts from "../../Pages/Dashboard/ReportedProducts/ReportedProducts";
 import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
@@ -50,7 +50,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/products/categories/${params.id}`),
+          fetch(
+            `https://used-products-resale-server-nine.vercel.app/products/categories/${params.id}`
+          ),
       },
     ],
   },
@@ -85,13 +87,24 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/dashboard/admin/reported-products",
+        element: (
+          <AdminRoute>
+            <ReportedProducts />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "/dashboard/seller/addproduct",
         element: (
           <SellerRoute>
             <AddProduct />
           </SellerRoute>
         ),
-        loader: () => fetch("http://localhost:5000/categories"),
+        loader: () =>
+          fetch(
+            "https://used-products-resale-server-nine.vercel.app/categories"
+          ),
       },
       {
         path: "/dashboard/seller/myproducts",
@@ -109,19 +122,14 @@ const router = createBrowserRouter([
           </BuyerRoute>
         ),
       },
-      {
-        path: "/dashboard/mywishlist",
-        element: (
-          <BuyerRoute>
-            <MyWishlist />
-          </BuyerRoute>
-        ),
-      },
+
       {
         path: "/dashboard/payment/:id",
         element: <Payment />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/bookings/${params.id}`),
+          fetch(
+            `https://used-products-resale-server-nine.vercel.app/bookings/${params.id}`
+          ),
       },
     ],
   },

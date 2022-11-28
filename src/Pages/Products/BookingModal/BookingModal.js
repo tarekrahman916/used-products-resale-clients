@@ -28,7 +28,7 @@ const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
       productId: _id,
     };
 
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://used-products-resale-server-nine.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -40,6 +40,8 @@ const BookingModal = ({ selectedProduct, setSelectedProduct }) => {
         if (data.acknowledged) {
           toast.success("The Product is booked.");
           setSelectedProduct("");
+        } else {
+          toast.error(data.message);
         }
       });
   };

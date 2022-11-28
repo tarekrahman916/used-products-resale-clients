@@ -7,11 +7,16 @@ const AllBuyers = () => {
     queryKey: ["buyers"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:5000/users?role=buyer", {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("laptopStoreToken")}`,
-          },
-        });
+        const res = await fetch(
+          "https://used-products-resale-server-nine.vercel.app/users?role=buyer",
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem(
+                "laptopStoreToken"
+              )}`,
+            },
+          }
+        );
         const data = await res.json();
         return data;
       } catch (error) {
@@ -21,7 +26,7 @@ const AllBuyers = () => {
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://used-products-resale-server-nine.vercel.app/users/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

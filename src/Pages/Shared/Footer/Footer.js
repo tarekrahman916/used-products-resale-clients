@@ -8,7 +8,9 @@ const Footer = () => {
         <Link to="/">
           <p className="text-4xl font-semibold">Laptop Store</p>
         </Link>
-        <p className="text-xl font-bold">Providing reliable tech since 1992</p>
+        <p className="text-xl font-bold">
+          Second Hand Laptop Sell & Buy Platform
+        </p>
       </div>
       <div>
         <span className="footer-title">Services</span>

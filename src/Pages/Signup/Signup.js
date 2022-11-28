@@ -36,13 +36,14 @@ const Signup = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
+        setUserEmail(user?.email);
         const userInfo = {
           displayName: name,
         };
         updateUser(userInfo)
           .then(() => {
             saveUserDb(name, email, role);
-            setUserEmail(user?.email);
+
             setIsLoading(false);
             toast.success("User created successfully");
           })
@@ -61,7 +62,7 @@ const Signup = () => {
 
   const saveUserDb = (name, email, role) => {
     const user = { name, email, role };
-    fetch("http://localhost:5000/users", {
+    fetch("https://used-products-resale-server-nine.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",

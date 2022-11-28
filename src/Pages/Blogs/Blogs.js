@@ -67,10 +67,42 @@ const Blogs = () => {
           (4) React vs. Angular vs. Vue?
         </h3>
         <p className="font-semibold">
-          <strong className="text-xl font-bold">React:</strong> Testing is a
-          type of software testing where individual units or components of a
-          software are tested. The purpose is to validate that each unit of the
-          software code performs as expected.
+          <strong className="text-xl font-bold">React Js:</strong>
+          This open-source Javascript library has become quite the rage for
+          developing interactive web and mobile apps since Facebook launched it
+          in 2013. There are primarily three reasons which have made the React
+          library a developer darling - Code Reusability- it allows developers
+          to reuse blocks of code for a simple function Ease-of-use - React,
+          though tougher than Vue, has a less steep learning curve than Angular
+          JS. Customizable - The crucial difference between the library and
+          framework is about control. This is where React is ahead of Angular-
+          it is highly customizable. You are in control and you incorporate the
+          parts of the library you need, unlike Angular, which does not allow
+          much modification.
+        </p>
+        <p className="font-semibold my-5">
+          <strong className="text-xl font-bold">Angular:</strong>
+          AngularJS was developed in 2009 by Google. The first version was
+          Angular.JS. Angular is currently known as a JavaScript framework.
+          Obviously, all significant Google projects have been developed with
+          Angular. Angular.js is an MVC framework. A major disadvantage of
+          Angular is that it uses a regular DOM, and thus, the entire tree
+          structure of the HTML tags is updated, which massively impacts the
+          loading time. Angular.js has its Ionic framework for mobile
+          applications.
+        </p>
+        <p className="font-semibold">
+          <strong className="text-xl font-bold">Vue Js:</strong>
+          Vue.js is a JavaScript-based progressive framework for creating
+          single-page applications. It was created with scalability and
+          incrementality in mind, as well as ease of integration with other view
+          layer frameworks. Vue is built from the bottom up to be progressively
+          adaptable, unlike other monolithic frameworks. The core library
+          focuses solely on the view layer, and it’s simple to use and connect
+          with other libraries or applications. This framework’s fast learning
+          angle is almost a trademark. It’s a flexible framework that may be
+          used as a library or a full-fledged framework for developing large web
+          applications.
         </p>
       </div>
     </div>

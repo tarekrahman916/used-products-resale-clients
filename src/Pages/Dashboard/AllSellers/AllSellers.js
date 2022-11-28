@@ -6,18 +6,21 @@ const AllSellers = () => {
   const { data: sellers = [], refetch } = useQuery({
     queryKey: ["sellers"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users?role=seller", {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("laptopStoreToken")}`,
-        },
-      });
+      const res = await fetch(
+        "https://used-products-resale-server-nine.vercel.app/users?role=seller",
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("laptopStoreToken")}`,
+          },
+        }
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://used-products-resale-server-nine.vercel.app/users/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -30,12 +33,15 @@ const AllSellers = () => {
   };
 
   const handleVerify = (email) => {
-    fetch(`http://localhost:5000/users?email=${email}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      `https://used-products-resale-server-nine.vercel.app/users?email=${email}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {

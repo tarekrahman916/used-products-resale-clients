@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -10,7 +9,9 @@ const Navbar = () => {
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/categories");
+      const res = await fetch(
+        "https://used-products-resale-server-nine.vercel.app/categories"
+      );
       const data = await res.json();
       return data;
     },
@@ -23,8 +24,8 @@ const Navbar = () => {
           Home
         </Link>
       </li>
-      <li tabIndex={0}>
-        <Link className="font-bold ">
+      <li>
+        <p className="font-bold ">
           Categories
           <svg
             className="fill-current"
@@ -35,8 +36,8 @@ const Navbar = () => {
           >
             <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
           </svg>
-        </Link>
-        <ul className="p-2 bg-base-100 w-36">
+        </p>
+        <ul className="p-2 bg-base-100 w-36 z-10">
           {categories.map((category) => (
             <li key={category._id}>
               <Link to={`/categories/${category._id}`}>{category.name}</Link>
@@ -69,10 +70,10 @@ const Navbar = () => {
       });
   };
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 ">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+          <label tabIndex={1} className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -89,7 +90,7 @@ const Navbar = () => {
             </svg>
           </label>
           <ul
-            tabIndex={0}
+            tabIndex={2}
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             {menuData}

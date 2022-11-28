@@ -15,7 +15,7 @@ const MyProducts = () => {
     queryKey: ["products", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?email=${user?.email}`,
+        `https://used-products-resale-server-nine.vercel.app/products?email=${user?.email}`,
         {
           headers: {
             authorization: `bearer ${localStorage.getItem("laptopStoreToken")}`,
@@ -28,9 +28,12 @@ const MyProducts = () => {
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/products/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://used-products-resale-server-nine.vercel.app/products/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -40,16 +43,20 @@ const MyProducts = () => {
   };
 
   const handleAdvertise = (id) => {
-    fetch(`http://localhost:5000/products?id=${id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      `https://used-products-resale-server-nine.vercel.app/products?id=${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
           toast.success("Your product added advertising");
+          refetch();
         }
       });
   };
@@ -62,7 +69,7 @@ const MyProducts = () => {
     <div className="my-6">
       <h2 className="text-3xl font-semibold mb-4 text-center">My Products</h2>
       <div className="overflow-x-auto">
-        <table className="table ">
+        <table className="table w-full">
           <thead>
             <tr>
               <th></th>
@@ -92,13 +99,15 @@ const MyProducts = () => {
                 <td>{product.price}</td>
                 <td>{product?.sold ? "Sold" : "Available"}</td>
                 <td>
-                  {!product?.sold && (
+                  {!product?.sold && !product.advertise ? (
                     <button
                       onClick={() => handleAdvertise(product._id)}
                       className="btn btn-sm btn-primary mr-3"
                     >
                       Advertise
                     </button>
+                  ) : (
+                    <span className="text-xl text-primary">Advertized</span>
                   )}
                 </td>
 

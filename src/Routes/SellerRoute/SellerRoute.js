@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 import { authContext } from "../../contexts/AuthProvider/AuthProvider";
 import useSeller from "../../hooks/useSeller";
 
@@ -9,7 +10,7 @@ const SellerRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading || isSellerLoading) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
 
   if (isSeller) {

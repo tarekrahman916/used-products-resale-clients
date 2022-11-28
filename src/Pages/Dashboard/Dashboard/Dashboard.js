@@ -9,7 +9,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:5000/users/${user?.email}`)
+    fetch(
+      `https://used-products-resale-server-nine.vercel.app/users/${user?.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setLoginUser(data);
@@ -18,7 +20,6 @@ const Dashboard = () => {
   }, [user?.email]);
 
   const { name, email, role } = loginUser;
-  console.log(role);
 
   return (
     <div>

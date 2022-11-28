@@ -8,13 +8,12 @@ const TopBanner = () => {
         <div className="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
           <div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
             <h1 className="lg:text-5xl text-3xl font-bold leading-none sm:text-6xl">
-              Ac mattis
-              <span className="text-primary">senectus</span>erat pharetra
+              Laptop Store
             </h1>
             <p className="mt-6 mb-8 text-lg sm:mb-12">
-              Dictum aliquam porta in condimentum ac integer
-              <br className="hidden md:inline lg:hidden" />
-              turpis pulvinar, est scelerisque ligula sem
+              Laptop Store is a platform on which you can buy and sell every{" "}
+              <strong>Second Hand Laptop</strong> ! We help people buy and sell
+              HP, Dell, Acer any type second hand laptop
             </p>
             <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
               <button className="btn btn-primary">Shop Now</button>

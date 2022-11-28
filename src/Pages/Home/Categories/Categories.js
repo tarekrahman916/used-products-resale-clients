@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa";
 import Loader from "../../../components/Loader/Loader";
-import { BeakerIcon, ArrowLongRightIcon } from "@heroicons/react/24/solid";
+import { ArrowLongRightIcon } from "@heroicons/react/24/solid";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -10,7 +9,7 @@ const Categories = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:5000/categories")
+    fetch("https://used-products-resale-server-nine.vercel.app/categories")
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);

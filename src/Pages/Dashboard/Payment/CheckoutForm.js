@@ -1,7 +1,8 @@
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { set } from "date-fns/esm";
+
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import "./Checkout.css";
 
 const CheckoutForm = ({ booking }) => {
   const [paymentError, setPaymentError] = useState("");
@@ -12,14 +13,17 @@ const CheckoutForm = ({ booking }) => {
   const { price, name, email, _id, productId } = booking;
 
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${localStorage.getItem("laptopStoreToken")}`,
-      },
-      body: JSON.stringify({ price }),
-    })
+    fetch(
+      "https://used-products-resale-server-nine.vercel.app/create-payment-intent",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("laptopStoreToken")}`,
+        },
+        body: JSON.stringify({ price }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, [price]);
@@ -76,7 +80,7 @@ const CheckoutForm = ({ booking }) => {
         productId,
       };
 
-      fetch("http://localhost:5000/payments", {
+      fetch("https://used-products-resale-server-nine.vercel.app/payments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -101,9 +105,9 @@ const CheckoutForm = ({ booking }) => {
           style: {
             base: {
               fontSize: "16px",
-              color: "#424770",
+              color: "#000000",
               "::placeholder": {
-                color: "#aab7c4",
+                color: "#000000",
               },
             },
             invalid: {
@@ -113,7 +117,7 @@ const CheckoutForm = ({ booking }) => {
         }}
       />
       <button
-        className="btn mt-3 btn-sm"
+        className="btn mt-3 btn-sm btn-secondary px-10 text-white"
         type="submit"
         disabled={!stripe || !clientSecret || processing}
       >
