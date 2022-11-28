@@ -31,23 +31,25 @@ const Advertise = () => {
 
   return (
     <div>
-      <div className={`${!advertiseProducts.length && "hidden"} `}>
-        <div className="mb-16">
-          <h2 className="text-4xl font-bold text-center my-6">
-            Advertising Products
-          </h2>
-          <hr className="border-2 border-primary lg:w-1/3 mx-auto mt-3" />
+      {advertiseProducts.length > 0 && (
+        <div>
+          <div className="mb-16">
+            <h2 className="text-4xl font-bold text-center my-6">
+              Advertising Products
+            </h2>
+            <hr className="border-2 border-primary lg:w-1/3 mx-auto mt-3" />
+          </div>
+          <div className="grid lg:grid-cols-3 gap-8">
+            {advertiseProducts.map((product) => (
+              <Product
+                key={product._id}
+                product={product}
+                setSelectedProduct={setSelectedProduct}
+              />
+            ))}
+          </div>
         </div>
-        <div className="grid lg:grid-cols-3 gap-8">
-          {advertiseProducts.map((product) => (
-            <Product
-              key={product._id}
-              product={product}
-              setSelectedProduct={setSelectedProduct}
-            />
-          ))}
-        </div>
-      </div>
+      )}
       {selectedProduct && (
         <BookingModal
           selectedProduct={selectedProduct}
